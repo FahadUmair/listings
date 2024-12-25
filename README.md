@@ -19,7 +19,7 @@ A React Native app for displaying real estate listings in Toronto, featuring inf
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/FahadUmair/listings
+   git clone https://github.com/FahadUmair/listings.git
    cd listings
    ```
 
