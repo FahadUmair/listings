@@ -113,3 +113,32 @@ exports.handler = async (event) => {
 };
 
 ```
+
+## Some Images
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/50d9101a-03d7-41c4-a360-5456934c8c17" />
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/974abde2-105a-4c16-95d3-caade91af4a3" />  
+
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/dabc15fc-c23c-403a-b981-0324c6d0e9ba" />
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/d08acc0f-7826-47d2-aa31-4894c3f45f35" />  
+
+
+- Select a cottage with 2 bedrooms
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/3de97b53-00c4-4197-94cf-bcc040814ca2" />
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/7e3e7d4b-609c-4dea-b134-6fbf5438721d" />
+
+# Edge cases
+
+- When there are no results. (Mobile home, 4 Bedrooms)
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/c5c88ee2-d28b-4d3e-8ae1-89d69e55619a" />
+
+- Displaying errors on the Signup page.  
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/60ebe23d-e6b7-4d29-8f90-2f1a987a9f40" />
+  
+- Error when signing up with an email you signed up with before. The API doesn't give an OK response till its a unique emaill each time.
+<img width="424" alt="image" src="https://github.com/user-attachments/assets/7a4650e0-19d1-4362-a42c-439cf0d0b645" />
+
+
+
+
+
+
