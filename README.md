@@ -134,7 +134,7 @@ exports.handler = async (event) => {
 - Displaying errors on the Signup page.  
 <img width="424" alt="image" src="https://github.com/user-attachments/assets/60ebe23d-e6b7-4d29-8f90-2f1a987a9f40" />
   
-- Error when signing up with an email you signed up with before. The API doesn't give an OK response till its a unique emaill each time.
+- Error when signing up with an email you signed up with before. The API doesn't give an OK response till its a unique email each time.
 <img width="424" alt="image" src="https://github.com/user-attachments/assets/7a4650e0-19d1-4362-a42c-439cf0d0b645" />
 
 
