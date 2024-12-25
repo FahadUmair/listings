@@ -1,50 +1,114 @@
-# Welcome to your Expo app 👋
+# Welcome to my Listings App 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native app for displaying real estate listings in Toronto, featuring infinite scroll, filters, and user accounts.
 
-## Get started
+## Features
 
-1. Install dependencies
+- User account creation with email and name
+- Listings fetched from a MongoDB database
+- Infinite scroll for smooth browsing
+- Filters for property type and number of bedrooms
+
+## Prerequisites
+
+- **Node.js** installed on your system
+- **iPhone Simulator**: Ensure you have an iPhone simulator (use Xcode). This app was tested on an **iPhone 15 Pro running iOS 17.2**.
+
+## Get Started
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/FahadUmair/listings
+   cd listings
+   ```
+
+2. **Install Dependencies**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. **Start the App**
 
    ```bash
-    npx expo start
+   npm run ios
    ```
 
-In the output, you'll find options to open the app in a
+## Development Notes
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- The app uses AWS Lambda to connect with MongoDB.
+- Ensure backend endpoints are configured correctly to avoid CORS issues.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Code for my backend lambda function
 
-## Get a fresh project
+```javascript
+const { MongoClient } = require("mongodb");
 
-When you're ready, run:
+const uri = process.env.DB_URI;
+const dbName = process.env.DB_NAME;
+const collectionName = process.env.COLLECTION_NAME;
 
-```bash
-npm run reset-project
+exports.handler = async (event) => {
+  const client = new MongoClient(uri);
+
+  try {
+    // Connect to MongoDB
+    await client.connect();
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+
+    
+    // Parse query parameters from event
+    const queryParams = JSON.parse(event.body || "{}");
+    const { filters = {}, page , limit = 5 } = queryParams;
+    // Build query based on filters
+    const query = {};
+    if (filters.BedroomsTotal && !isNaN(filters.BedroomsTotal)) {
+      query.BedroomsTotal = filters.BedroomsTotal; // Filter for minimum bedrooms
+      console.log("filters.BedroomsTotal:", filters.BedroomsTotal);
+      
+    }
+    if (filters.ArchitecturalStyle) {
+      query.ArchitecturalStyle = filters.ArchitecturalStyle; // Direct match for array elements
+    }
+
+    // Paginate results
+    const skip = (page - 1) * limit;
+
+    // Query MongoDB for listings
+    const listings = await collection
+      .find(query, {
+        projection: {
+          ListPrice: 1,
+          ArchitecturalStyle: 1,
+          BedroomsTotal: 1,
+          BathroomsTotalInteger: 1,
+          LivingArea: 1,
+          YearBuilt: 1,
+          City: 1,
+          PostalCode: 1,
+          "Media.MediaURL": 1,
+          _id: 0, // Exclude the _id field if not needed
+        },
+      })
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(listings),
+    };
+  } catch (error) {
+    console.error("Error retrieving listings:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Error retrieving listings" }),
+    };
+  } finally {
+    await client.close();
+  }
+};
+
 ```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
