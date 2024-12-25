@@ -12,7 +12,7 @@ A React Native app for displaying real estate listings in Toronto, featuring inf
 ## Prerequisites
 
 - **Node.js** installed on your system
-- **iPhone Simulator**: Ensure you have an iPhone simulator (use Xcode). This app was tested on an `iPhone 15 Pro running iOS 17.2**`.
+- **iPhone Simulator**: Ensure you have an iPhone simulator (use Xcode). This app was tested on an `iPhone 15 Pro running iOS 17.2`.
 
 ## Get Started
 
