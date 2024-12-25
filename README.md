@@ -12,7 +12,7 @@ A React Native app for displaying real estate listings in Toronto, featuring inf
 ## Prerequisites
 
 - **Node.js** installed on your system
-- **iPhone Simulator**: Ensure you have an iPhone simulator (use Xcode). This app was tested on an **iPhone 15 Pro running iOS 17.2**.
+- **iPhone Simulator**: Ensure you have an iPhone simulator (use Xcode). This app was tested on an ==**iPhone 15 Pro running iOS 17.2**==.
 
 ## Get Started
 
@@ -37,10 +37,11 @@ A React Native app for displaying real estate listings in Toronto, featuring inf
 
 ## Development Notes
 
-- The app uses AWS Lambda to connect with MongoDB.
-- Ensure backend endpoints are configured correctly to avoid CORS issues.
+- To enable querying MongoDB, I created an AWS Lambda function. This function acts as the backend service, interfacing with the MongoDB database to fetch and filter listings based on user input. 
+- The Lambda function is integrated with an AWS API Gateway, which handles HTTP requests and ensures secure communication between the React Native app and the database.
+- For local development and testing, CORS headers were added to the Lambda responses to address any cross-origin issues when running the app from `localhost`.
 
-## Code for my backend lambda function
+## Code for my aws lambda function
 
 ```javascript
 const { MongoClient } = require("mongodb");
